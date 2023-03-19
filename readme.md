@@ -29,11 +29,16 @@ go build -o dns-authority-sink
 ```
 sudo ./dns-authority-sink
 ```
+the default response address can be overwritten
+```
+sudo ./dns-authority-sink -default-answer 1.1.1.1
+```
+
 2. The server will start listening on port 53 (UDP) for incoming DNS requests.
 3. To add custom records to the SQLite database, use an SQLite client to insert records into the dns_records table:
 ```
-echo "INSERT INTO dns_records (qname, answer) VALUES ('www.domain.com', '10.1.1.1');" | sqlite3 dns.db
-echo "INSERT INTO dns_records (qname, answer) VALUES ('www.domain2.com', '10.1.2.3');" | sqlite3 dns.db
+echo "INSERT INTO dns_records (qname, answer) VALUES ('www.domain.com.', '10.1.1.1');" | sqlite3 dns.db
+echo "INSERT INTO dns_records (qname, answer) VALUES ('www.domain2.com.', '10.1.2.3');" | sqlite3 dns.db
 ```
 4. Query the server using a DNS client, such as dig:
 ```

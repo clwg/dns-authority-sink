@@ -46,7 +46,8 @@ func initDB() {
 	createTableQuery := `CREATE TABLE IF NOT EXISTS dns_records (
 		id INTEGER PRIMARY KEY,
 		qname TEXT,
-		answer TEXT
+		answer TEXT,
+		UNIQUE(qname)
 	);
 	CREATE TABLE IF NOT EXISTS dns_queries (
 		id INTEGER PRIMARY KEY,
@@ -102,7 +103,6 @@ func findAnswer(qname string) string {
 	err := db.QueryRow("SELECT answer FROM dns_records WHERE qname = ?", qname).Scan(&answer)
 
 	if err != nil {
-		log.Println(err)
 		return defaultAnswer
 	}
 
