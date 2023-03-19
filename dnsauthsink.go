@@ -102,9 +102,6 @@ func findAnswer(qname string) string {
 	err := db.QueryRow("SELECT answer FROM dns_records WHERE qname = ?", qname).Scan(&answer)
 
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return defaultAnswer
-		}
 		log.Println(err)
 		return defaultAnswer
 	}
