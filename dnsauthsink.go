@@ -14,11 +14,13 @@ import (
 
 var (
 	defaultAnswer string
+	listenAddress string
 	db            *sql.DB
 )
 
 func main() {
 	flag.StringVar(&defaultAnswer, "default-answer", "192.0.2.1", "Default answer for DNS queries")
+	flag.StringVar(&listenAddress, "listen-address", ":53", "IP address and port to listen on")
 	flag.Parse()
 
 	// Initialize database
@@ -27,7 +29,7 @@ func main() {
 	// DNS server
 	dns.HandleFunc(".", handleRequest)
 
-	server := &dns.Server{Addr: ":53", Net: "udp"}
+	server := &dns.Server{Addr: listenAddress, Net: "udp"}
 	err := server.ListenAndServe()
 	defer server.Shutdown()
 	if err != nil {
