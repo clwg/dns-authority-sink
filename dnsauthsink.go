@@ -19,7 +19,7 @@ var (
 )
 
 func main() {
-	flag.StringVar(&defaultAnswer, "default-answer", "192.0.2.1", "Default answer for DNS queries")
+	flag.StringVar(&defaultAnswer, "default-answer", "10.0.0.1", "Default answer for DNS queries")
 	flag.StringVar(&listenAddress, "listen-address", ":53", "IP address and port to listen on")
 	flag.Parse()
 
@@ -39,7 +39,7 @@ func main() {
 
 func initDB() {
 	var err error
-	db, err = sql.Open("sqlite3", "./dns.db")
+	db, err = sql.Open("sqlite3", "./dns_authority.db")
 	if err != nil {
 		log.Fatal(err)
 	}
